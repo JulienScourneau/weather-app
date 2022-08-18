@@ -50,3 +50,41 @@ input {
   -webkit-appearance: none;
   border-radius: 0;
 }
+
+body {
+  background-color: lightgray;
+}
+
+.header {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+.header__menu {
+  margin-right: 15px;
+}
+.header__search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: white;
+}
+.header__search__text {
+  height: 100%;
+  width: 100%;
+  margin: 0px 5px;
+}
+.header__search__text__input {
+  font-size: 1rem;
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+.header__search__text__input:focus {
+  outline: none;
+}
+.header__search__img {
+  margin-right: 5px;
+}

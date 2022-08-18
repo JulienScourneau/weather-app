@@ -1,0 +1,39 @@
+body {
+    background-color: lightgray;
+}
+
+.header {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+
+    &__menu {
+        margin-right: 15px;
+    }
+
+    &__search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        border-radius: 20px;
+        background-color: white;
+        &__text {
+            height: 100%;
+            width: 100%;
+            margin: 0px 5px;
+            &__input {
+                font-size: 1rem;
+                border: none;
+                height: 100%;
+                width: 100%;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        &__img {
+            margin-right: 5px;
+        }
+    }
+}
