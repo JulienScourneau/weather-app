@@ -9,17 +9,56 @@
     </head>
     <body>
         <header class="header">
-            <img class="header__menu" src="assets/image/icon/menu_black_24dp.svg" alt="">
+            <img
+                class="header__menu"
+                src="assets/image/icon/menu_black_24dp.svg"
+                alt=""
+            />
             <nav></nav>
             <div class="header__search">
                 <div class="header__search__text">
-                    <input class="header__search__text__input" type="text" placeholder="Search">
+                    <input
+                        class="header__search__text__input"
+                        type="text"
+                        placeholder="Search"
+                    />
                 </div>
-                <img class="header__search__img" src="assets/image/icon/search_black_24dp.svg" alt="Search icon">
+                <img
+                    class="header__search__img"
+                    src="assets/image/icon/search_black_24dp.svg"
+                    alt="Search icon"
+                />
             </div>
         </header>
         <main class="main">
-            
+            <section class="weather-section">
+                <div class="weather">
+                    <h1 class="weather__city">City</h1>
+                    <div class="weather__temp">
+                        <h2 class="weather__temp__now">00°</h2>
+                        <div class="weather__temp__day">
+                            <span class="weather__temp__day__value temp-min">
+                                00°
+                            </span>
+                            <span class="weather__temp__day__value temp-max">
+                                00°
+                            </span>
+                        </div>
+                    </div>
+                    <h3 class="weather__description">Rainy time</h3>
+                </div>
+            </section>
+            <section class="forecast-section">
+                <!-- forecast area-->
+                <article class="forecast">
+                    <p class="forecast__day">19/08</p>
+                    <img class="forecast__icon" src="assets/image/icon/clear sky.png" alt="forecast icon">
+                    <div class="forecast__temp">
+                        <span class="forecast__temp__min">00°</span>
+                        <span class="forecast__temp__max">00°</span>
+                    </div>
+                </article>
+            </section>
         </main>
         <footer></footer>
     </body>

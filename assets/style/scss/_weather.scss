@@ -1,0 +1,49 @@
+.weather-section {
+    background-image: url("/assets/image/photo/tokyo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: $lato;
+    background-color: white;
+    border-radius: 12px;
+    padding: 12px;
+
+    &__city {
+        font-size: 24px;
+        font-weight: 900;
+        margin: 5px;
+    }
+
+    &__temp {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+
+        &__now {
+            font-size: 48px;
+        font-weight: 400;
+        margin-bottom: 5px;
+        }
+
+        &__day {
+            color: #5a5a5a;
+        }
+    }
+    &__description {
+        margin: 5px;
+    }
+}
