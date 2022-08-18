@@ -141,6 +141,12 @@ input {
   margin: 5px;
 }
 
+.forecast-section {
+  white-space: nowrap;
+  overflow: auto;
+  display: flex;
+}
+
 .forecast {
   width: -webkit-fit-content;
   width: -moz-fit-content;

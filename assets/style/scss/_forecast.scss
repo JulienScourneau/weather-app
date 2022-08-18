@@ -1,3 +1,9 @@
+.forecast-section{
+    white-space: nowrap;
+    overflow: auto;
+    display: flex;
+}
+
 .forecast {
     width: fit-content;
     background-color: lightgray;
