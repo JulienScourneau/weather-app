@@ -1,8 +1,18 @@
 //font
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-$lato: 'Lato', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500&display=swap');
+$lato: "Lato", sans-serif;
+$hind: 'Hind', sans-serif;
+
+//Colors
+$colorPrimary: #183FB4;
+$colorPrimaryDark: #0F266C;
+$colorPrimaryLight: #5f5fc4;
+$colorSecondary: #FFF9FB;
+$colorAccent: #7C90A0;
 
 //layout
 @import "reset";
 @import "header";
 @import "weather";
+@import "forecast";

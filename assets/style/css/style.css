@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500&display=swap");
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -50,10 +51,6 @@ table {
 input {
   -webkit-appearance: none;
   border-radius: 0;
-}
-
-body {
-  background-color: lightgray;
 }
 
 .header {
@@ -137,8 +134,36 @@ body {
   margin-bottom: 5px;
 }
 .weather__temp__day {
+  font-family: "Hind", sans-serif;
   color: #5a5a5a;
 }
 .weather__description {
   margin: 5px;
+}
+
+.forecast {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: lightgray;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 5px;
+  font-family: "Hind", sans-serif;
+}
+.forecast__day {
+  margin: 5px;
+  margin-top: 10px;
+}
+.forecast__icon {
+  margin: 10px 0px;
+  width: 40px;
+  height: 40px;
+}
+.forecast__temp {
+  margin: 10px;
 }
