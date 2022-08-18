@@ -2,7 +2,7 @@
     background-image: url("/assets/image/photo/tokyo.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    height: 320px;
+    height: 360px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,9 @@
     align-items: center;
     justify-content: center;
     font-family: $lato;
-    background-color: white;
+    background-color: $colorPrimaryDark;
+    color: $colorSecondary;
+    border: 3px solid white;
     border-radius: 12px;
     padding: 12px;
 
@@ -27,23 +29,17 @@
     }
 
     &__temp {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 5px;
-
-        &__now {
-            font-size: 48px;
+        font-size: 48px;
         font-weight: 400;
-        margin-bottom: 5px;
-        }
-
-        &__day {
-            font-family: $hind;
-            color: #5a5a5a;
-        }
+        margin: 5px;
+        font-family: $lato
     }
+
+    &__icon {
+        width: 60px;
+        height: 60px;
+    }
+
     &__description {
         margin: 5px;
     }

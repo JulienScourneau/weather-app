@@ -5,15 +5,19 @@ async function getWeather() {
         );
         let response = await weather.json();
         console.log(response);
-        console.table(response.list[0]);
-        console.log(response.city.name);
-        console.log(response.list[0].main.temp);
-        console.log(response.list[0].weather[0].description);
-        console.log(response.list[0].weather[0].main);
+        displayActualWeather(response.city.name,response.list[0].main.tempresponse.list[0].weather[0].main,response.list[0].weather[0].description)
+        
     } catch (error) {
         console.log(error);
     }
 }
+
+const displayActualWeather = (city, temp, icon, description) => {
+    document.getElementById("weather__city").innerHTML = city;
+    document.getElementById("weather__temp").innerHTML = parseInt(temp) +"°";
+    document.getElementById("weather__icon").src = icon;
+    document.getElementById("weather__description").innerHTML = description;
+};
 
 const createForecastArticle = (date, image, minTemp, maxTemp) => {
     let article = document.createElement("article");
@@ -23,12 +27,12 @@ const createForecastArticle = (date, image, minTemp, maxTemp) => {
     let minSpan = document.createElement("span");
     let maxSpan = document.createElement("span");
 
-    article.classList.add("forecast")
-    p.classList.add("forecast__day")
-    img.classList.add("forecast__icon")
-    tempDiv.classList.add("forecast__temp")
-    minSpan.classList.add("forecast__temp__min")
-    maxSpan.classList.add("forecast__temp__max")
+    article.classList.add("forecast");
+    p.classList.add("forecast__day");
+    img.classList.add("forecast__icon");
+    tempDiv.classList.add("forecast__temp");
+    minSpan.classList.add("forecast__temp__min");
+    maxSpan.classList.add("forecast__temp__max");
 
     p.innerHTML = date;
     img.src = image;
@@ -44,3 +48,4 @@ const createForecastArticle = (date, image, minTemp, maxTemp) => {
     document.getElementById("forecast-section").appendChild(article);
 };
 
+displayActualWeather("Vancouver", 18.87, "assets/image/icon/wind.png", "Nuageux");
