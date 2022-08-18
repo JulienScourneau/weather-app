@@ -59,6 +59,9 @@ body {
   margin: 10px;
   display: flex;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
 }
 .header__menu {
   margin-right: 15px;
