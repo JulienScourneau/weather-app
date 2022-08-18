@@ -153,6 +153,7 @@ input {
   width: fit-content;
   background-color: lightgray;
   border-radius: 12px;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
