@@ -4,7 +4,7 @@ async function getWeather(city) {
             `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
         );
         let response = await weather.json();
-        console.log(response);
+        getCityPhoto(city)
         displayActualWeather(
             response.city.name,
             response.list[0].main.temp,
@@ -19,7 +19,7 @@ async function getWeather(city) {
             );
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -31,7 +31,25 @@ async function getCityList(input) {
         let response = await cityList.json();
         console.log(response);
         displayAutocomplete(response._embedded["city:search-results"]);
-    } catch (error) {}
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getCityPhoto(input) {
+    try {
+        let photo = await fetch(
+            `https://api.unsplash.com/search/photos?query=${input}&client_id=PieWdS-z10ISJpU3KdJV431kfTUEssUHEsgHYk1CnQ8`
+        );
+        let response = await photo.json();
+        let random = Math.floor(Math.random() * 10);
+        document.querySelector(
+            "section"
+        ).style.backgroundImage = `url("${response.results[random].urls.raw}")`; 
+        console.log(response.results[0].urls.raw);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 const displayActualWeather = (city, temp, icon, description) => {
@@ -89,15 +107,13 @@ const setupListener = () => {
     document.body.addEventListener("keypress", (event) => {
         if (event.key == "Enter") {
             let city = getCityName();
-            getWeather(city)
+            getWeather(city);
         }
     });
-    document
-        .getElementById("search__img")
-        .addEventListener("click", () => {
-            let city = getCityName();
-            getWeather(city)
-        });
+    document.getElementById("search__img").addEventListener("click", () => {
+        let city = getCityName();
+        getWeather(city);
+    });
 };
 
 const getCityName = () => {
@@ -157,6 +173,4 @@ const clearSearchList = () => {
     let ul = document.querySelector("ul");
     while (ul.firstChild) ul.removeChild(ul.firstChild);
 };
-
-//getWeather("china");
 setupListener();

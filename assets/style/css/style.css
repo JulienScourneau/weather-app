@@ -148,10 +148,16 @@ input {
   background-image: url("/assets/image/photo/tokyo.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   height: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media screen and (min-width: 760px) {
+  .weather-section {
+    height: 640px;
+  }
 }
 
 .weather {
