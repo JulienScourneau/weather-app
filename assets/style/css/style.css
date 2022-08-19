@@ -60,6 +60,8 @@ input {
   position: fixed;
   top: 0;
   z-index: 1;
+  /* Handle */
+  /* Handle on hover */
 }
 .header__menu {
   margin-right: 15px;
@@ -103,6 +105,9 @@ input {
   overflow: hidden;
   overflow-y: scroll;
 }
+.header__search__autocomplete ul {
+  overflow: auto;
+}
 .header__search__autocomplete li {
   margin: 0px 5px;
   padding: 12px;
@@ -111,6 +116,32 @@ input {
 .header__search__autocomplete li:hover {
   background-color: lightgray;
   border-radius: 12px;
+}
+.header ::-webkit-scrollbar {
+  width: 5px;
+  overflow: hidden;
+  height: 5px;
+}
+.header ::-webkit-scrollbar-track {
+  height: 5px;
+}
+.header ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+  overflow: hidden;
+  height: 5px;
+}
+.header ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  overflow: hidden;
+}
+.header ::-webkit-scrollbar-track-piece:end {
+  background-color: transparent;
+  margin-bottom: 10px;
+}
+.header ::-webkit-scrollbar-track-piece:start {
+  background-color: transparent;
+  margin-top: 15px;
 }
 
 .weather-section {

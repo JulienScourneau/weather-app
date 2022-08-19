@@ -79,9 +79,31 @@ const setupListener = () => {
     document
         .getElementById("search__input")
         .addEventListener("keyup", (event) => {
-            if (event.target.value.length >= 3) getCityList(event.target.value);
-            if (event.target.value.length == 0) clearSearchList();
+            if (event.key != "Enter") {
+                if (event.target.value.length >= 3)
+                    getCityList(event.target.value);
+                if (event.target.value.length == 0) clearSearchList();
+            }
         });
+
+    document.body.addEventListener("keypress", (event) => {
+        if (event.key == "Enter") {
+            let city = getCityName();
+            getWeather(city)
+        }
+    });
+    document
+        .getElementById("search__img")
+        .addEventListener("click", () => {
+            let city = getCityName();
+            getWeather(city)
+        });
+};
+
+const getCityName = () => {
+    let input = document.getElementById("search__input");
+    let word = input.value.split(",");
+    return word[0];
 };
 
 const getIcon = (icon, hour) => {
@@ -110,13 +132,19 @@ const getIcon = (icon, hour) => {
 
 const displayAutocomplete = (list) => {
     clearSearchList();
-
     if (list.length != 0) {
         let search = document.getElementById("header__search");
+        let searchText = document.getElementById("search__input");
         let ul = document.getElementById("search__autocomplete");
         search.style.borderRadius = "20px 20px 0px 0px";
         for (let i = 0; i < 10; i++) {
             let li = document.createElement("li");
+            li.addEventListener("click", () => {
+                console.log(li.textContent);
+                console.log(searchText);
+                searchText.value = li.textContent;
+                clearSearchList();
+            });
             li.innerHTML = list[i].matching_full_name;
             ul.appendChild(li);
         }

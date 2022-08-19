@@ -46,7 +46,9 @@
             background-color: white;
             overflow: hidden;
             overflow-y: scroll;
-
+            ul {
+                overflow: auto;
+            }
             li {
                 margin: 0px 5px;
                 padding: 12px;
@@ -57,5 +59,34 @@
                 }
             }
         }
+    }
+    ::-webkit-scrollbar {
+        width: 5px;
+        overflow: hidden;
+        height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        height: 5px;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 2px;
+        overflow: hidden;
+        height: 5px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        overflow: hidden;
+    }
+    ::-webkit-scrollbar-track-piece:end {
+        background-color: transparent;
+        margin-bottom: 10px;
+    }
+    ::-webkit-scrollbar-track-piece:start {
+        background-color: transparent;
+        margin-top: 15px;
     }
 }
