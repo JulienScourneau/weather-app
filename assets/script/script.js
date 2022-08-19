@@ -23,6 +23,17 @@ async function getWeather(city) {
     }
 }
 
+async function getCityList(input){
+    try {
+        let cityList = await fetch(`https://api.teleport.org/api/cities/?search=${input}`)
+        let response = await cityList.json()
+        console.log(response);
+        console.log(response._embedded["city:search-results"][0].matching_alternate_names[1].name);
+    } catch (error) {
+        
+    }
+}
+
 const displayActualWeather = (city, temp, icon, description) => {
     document.getElementById("weather__city").innerHTML = city;
     document.getElementById("weather__temp").innerHTML = parseInt(temp) + "°";
@@ -58,13 +69,22 @@ const getHourOrDate = (date) => {
     if (today.getDate() == actualDate.getDate()) {
         return `${actualDate.getHours()}H00`;
     } else {
-        return actualDate.getMonth + 1 < 10
+        return actualDate.getMonth + 1 <= 10
             ? `${actualDate.getDate()}/${actualDate.getMonth() + 1}`
             : `${actualDate.getDate()}/0${actualDate.getMonth() + 1}`;
     }
 };
 
+const setupListener = () => {
+    document
+        .getElementById("search__input")
+        .addEventListener("keyup", (event) => {
+            if (event.target.value.length >= 3) getCityList(event.target.value);
+        });
+};
+
 const getIcon = (icon, hour) => {
+    //Add hour for night icon
     switch (icon) {
         case "partiellement nuageux":
             return "assets/image/icon/party sunny.png";
@@ -88,3 +108,4 @@ const getIcon = (icon, hour) => {
 };
 
 //getWeather("china");
+setupListener();
