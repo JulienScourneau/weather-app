@@ -89,6 +89,29 @@ input {
 .header__search__img {
   margin-right: 5px;
 }
+.header__search__autocomplete {
+  width: 248px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 250px;
+  position: absolute;
+  top: 33px;
+  border-radius: 0px 0px 20px 20px;
+  z-index: 2;
+  background-color: white;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.header__search__autocomplete li {
+  margin: 0px 5px;
+  padding: 12px;
+  list-style-type: none;
+}
+.header__search__autocomplete li:hover {
+  background-color: lightgray;
+  border-radius: 12px;
+}
 
 .weather-section {
   background-image: url("/assets/image/photo/tokyo.jpg");

@@ -23,15 +23,15 @@ async function getWeather(city) {
     }
 }
 
-async function getCityList(input){
+async function getCityList(input) {
     try {
-        let cityList = await fetch(`https://api.teleport.org/api/cities/?search=${input}`)
-        let response = await cityList.json()
+        let cityList = await fetch(
+            `https://api.teleport.org/api/cities/?search=${input}`
+        );
+        let response = await cityList.json();
         console.log(response);
-        console.log(response._embedded["city:search-results"][0].matching_alternate_names[1].name);
-    } catch (error) {
-        
-    }
+        displayAutocomplete(response._embedded["city:search-results"]);
+    } catch (error) {}
 }
 
 const displayActualWeather = (city, temp, icon, description) => {
@@ -80,6 +80,7 @@ const setupListener = () => {
         .getElementById("search__input")
         .addEventListener("keyup", (event) => {
             if (event.target.value.length >= 3) getCityList(event.target.value);
+            if (event.target.value.length == 0) clearSearchList();
         });
 };
 
@@ -105,6 +106,28 @@ const getIcon = (icon, hour) => {
         default:
             return "assets/image/icon/hot.png";
     }
+};
+
+const displayAutocomplete = (list) => {
+    clearSearchList();
+
+    if (list.length != 0) {
+        let search = document.getElementById("header__search");
+        let ul = document.getElementById("search__autocomplete");
+        search.style.borderRadius = "20px 20px 0px 0px";
+        for (let i = 0; i < 10; i++) {
+            let li = document.createElement("li");
+            li.innerHTML = list[i].matching_full_name;
+            ul.appendChild(li);
+        }
+    }
+};
+
+const clearSearchList = () => {
+    let search = document.getElementById("header__search");
+    search.style.borderRadius = "20px";
+    let ul = document.querySelector("ul");
+    while (ul.firstChild) ul.removeChild(ul.firstChild);
 };
 
 //getWeather("china");

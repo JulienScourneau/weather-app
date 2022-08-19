@@ -34,5 +34,28 @@
         &__img {
             margin-right: 5px;
         }
+
+        &__autocomplete {
+            width: 248px;
+            height: fit-content;
+            max-height: 250px;
+            position: absolute;
+            top: 33px;
+            border-radius: 0px 0px 20px 20px;
+            z-index: 2;
+            background-color: white;
+            overflow: hidden;
+            overflow-y: scroll;
+
+            li {
+                margin: 0px 5px;
+                padding: 12px;
+                list-style-type: none;
+                &:hover {
+                    background-color: lightgray;
+                    border-radius: 12px;
+                }
+            }
+        }
     }
 }
