@@ -65,8 +65,6 @@ const displayActualWeather = (city, temp, icon, description) => {
     document.getElementById("weather__description").innerHTML = description;
 };
 
-const getForecastDay = (item) => {};
-
 const createForecastArticle = (date, image, temp) => {
     let article = document.createElement("article");
     let p = document.createElement("p");
@@ -105,19 +103,37 @@ const setupListener = () => {
     document
         .getElementById("search__input")
         .addEventListener("keyup", (event) => {
-            if (event.key != "Enter") {
-                if (event.target.value.length >= 3)
-                    getCityList(event.target.value);
-                if (event.target.value.length == 0) clearSearchList();
-            }
+            if (
+                event.key == "Enter" ||
+                event.key == "ArrowRight" ||
+                event.key == "ArrowLeft" ||
+                event.key == "ArrowDown" ||
+                event.key == "ArrowUp"
+            )
+                return;
+
+            if (event.target.value.length >= 3) getCityList(event.target.value);
+            if (event.target.value.length == 0) clearSearchList();
         });
 
-    document.body.addEventListener("keypress", (event) => {
+    document.body.addEventListener("keyup", (event) => {
         if (event.key == "Enter") {
-            console.log(document.querySelector("li"));;
+            let searchCity = document.querySelector("li");
+            if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
-            getWeather(city);
-            clearSearchList();
+            if (city != "") {
+                getWeather(city);
+                clearSearchList();
+            }
+        }
+        console.log(event.key);
+        if (event.key == "ArrowDown") {
+            console.log("Focus");
+            
+            let focus = document.querySelector("li");
+            focus.tabIndex = -1;
+            console.log(focus);
+            focus.focus();
         }
     });
     document.getElementById("search__img").addEventListener("click", () => {

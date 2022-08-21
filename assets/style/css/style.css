@@ -117,6 +117,10 @@ input {
   background-color: lightgray;
   border-radius: 12px;
 }
+.header__search__autocomplete li:focus {
+  background-color: lightgray;
+  border-radius: 12px;
+}
 .header ::-webkit-scrollbar {
   width: 5px;
   overflow: hidden;
