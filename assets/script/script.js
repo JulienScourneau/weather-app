@@ -4,18 +4,26 @@ async function getWeather(city) {
             `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
         );
         let response = await weather.json();
-        getCityPhoto(city)
+        getCityPhoto(city);
         displayActualWeather(
             response.city.name,
             response.list[0].main.temp,
             response.list[0].weather[0].description,
             response.list[0].weather[0].description
         );
-        for (let i = 1; i < response.list.length; i++) {
+        let today = new Date();
+        let forecastList = response.list.filter(
+            (item) =>
+                new Date(item.dt_txt).getDate() !== today.getDate() &&
+                new Date(item.dt_txt).getHours() == 12
+        );
+        console.log(forecastList);
+        for (let elem of forecastList) {
+            console.log(elem);
             createForecastArticle(
-                response.list[i].dt_txt,
-                response.list[i].weather[0].description,
-                response.list[i].main.temp
+                elem.dt_txt,
+                elem.weather[0].description,
+                elem.main.temp
             );
         }
     } catch (error) {
@@ -29,7 +37,6 @@ async function getCityList(input) {
             `https://api.teleport.org/api/cities/?search=${input}`
         );
         let response = await cityList.json();
-        console.log(response);
         displayAutocomplete(response._embedded["city:search-results"]);
     } catch (error) {
         console.error(error);
@@ -45,8 +52,7 @@ async function getCityPhoto(input) {
         let random = Math.floor(Math.random() * 10);
         document.querySelector(
             "section"
-        ).style.backgroundImage = `url("${response.results[random].urls.raw}")`; 
-        console.log(response.results[0].urls.raw);
+        ).style.backgroundImage = `url("${response.results[random].urls.raw}")`;
     } catch (error) {
         console.error(error);
     }
@@ -58,6 +64,8 @@ const displayActualWeather = (city, temp, icon, description) => {
     document.getElementById("weather__icon").src = getIcon(icon);
     document.getElementById("weather__description").innerHTML = description;
 };
+
+const getForecastDay = (item) => {};
 
 const createForecastArticle = (date, image, temp) => {
     let article = document.createElement("article");
@@ -106,8 +114,10 @@ const setupListener = () => {
 
     document.body.addEventListener("keypress", (event) => {
         if (event.key == "Enter") {
+            console.log(document.querySelector("li"));;
             let city = getCityName();
             getWeather(city);
+            clearSearchList();
         }
     });
     document.getElementById("search__img").addEventListener("click", () => {
@@ -150,21 +160,23 @@ const displayAutocomplete = (list) => {
     clearSearchList();
     if (list.length != 0) {
         let search = document.getElementById("header__search");
-        let searchText = document.getElementById("search__input");
         let ul = document.getElementById("search__autocomplete");
         search.style.borderRadius = "20px 20px 0px 0px";
         for (let i = 0; i < 10; i++) {
             let li = document.createElement("li");
-            li.addEventListener("click", () => {
-                console.log(li.textContent);
-                console.log(searchText);
-                searchText.value = li.textContent;
+            li.addEventListener("click", (event) => {
+                displaySearchCity(event.target.textContent);
                 clearSearchList();
             });
             li.innerHTML = list[i].matching_full_name;
             ul.appendChild(li);
         }
     }
+};
+
+const displaySearchCity = (city) => {
+    let searchText = document.getElementById("search__input");
+    searchText.value = city;
 };
 
 const clearSearchList = () => {
