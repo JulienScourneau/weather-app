@@ -136,7 +136,6 @@ const setupListener = () => {
     document.body.addEventListener("keyup", (event) => {
         if (event.key == "Enter") {
             let searchCity;
-            console.log(document.activeElement);
             if (document.activeElement == document.getElementById("search__input")) {
                 searchCity = document.querySelector('ul').firstChild
             } else{
