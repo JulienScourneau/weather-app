@@ -1,5 +1,5 @@
 let throttlePause;
-
+let focusIndex = -1;
 async function getWeather(city) {
     try {
         let weather = await fetch(
@@ -135,28 +135,27 @@ const setupListener = () => {
 
     document.body.addEventListener("keyup", (event) => {
         if (event.key == "Enter") {
-            let searchCity = document.querySelector("li");
+            let searchCity = document.activeElement
             if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
             if (city != "") {
-                let a = getWeather(city);
-                a.then((response) => displayWeather(response));
+                let data = getWeather(city);
+                data.then((response) => displayWeather(response));
                 clearSearchList();
             }
         }
-        // console.log(event.key);
-        // if (event.key == "ArrowDown") {
-        //     console.log("Focus");
-
-        //     let focus = document.querySelector("li");
-        //     focus.tabIndex = -1;
-        //     console.log(focus);
-        //     focus.focus();
-        // }
+        setFocus(event);
     });
     document.getElementById("search__img").addEventListener("click", () => {
+        let searchCity = document.querySelector("li");
+        if (searchCity != null) displaySearchCity(searchCity.textContent);
         let city = getCityName();
-        getWeather(city);
+        console.log(city);
+        if (city != "") {
+            let data = getWeather(city);
+            data.then((response) => displayWeather(response));
+            clearSearchList();
+        }
     });
 };
 
@@ -204,7 +203,8 @@ const displayAutocomplete = (list) => {
             let li = document.createElement("li");
             li.addEventListener("click", (event) => {
                 displaySearchCity(event.target.textContent);
-                getWeather(getCityName());
+                let data = getWeather(getCityName());
+                data.then((response) => displayWeather(response));
                 clearSearchList();
             });
             li.innerHTML = list[i].matching_full_name;
@@ -224,6 +224,7 @@ const clearForecastList = () => {
 };
 
 const clearSearchList = () => {
+    focusIndex = -1;
     let search = document.getElementById("header__search");
     search.style.borderRadius = "20px";
     let ul = document.querySelector("ul");
@@ -240,11 +241,44 @@ const throttle = (callback, time) => {
 };
 
 const loadLocalData = () => {
-    if (localStorage.length == 0) return getWeather("Bruxelles");
+    if (
+        JSON.parse(localStorage.getItem("weatherData")).cod == "400" ||
+        localStorage.length == 0
+    ) {
+        let data = getWeather("Bruxelles");
+        data.then((response) => displayWeather(response));
+        return;
+    }
     let weatherData = JSON.parse(localStorage.getItem("weatherData"));
     let photo = JSON.parse(localStorage.getItem("photoData"));
     displayWeather(weatherData);
     document.querySelector("section").style.backgroundImage = `url("${photo}")`;
 };
+
+const setFocus = (event) => {
+    let ul = document.querySelector("ul");
+    if (event.key == "ArrowDown")
+        if (
+            document.querySelectorAll("#search__autocomplete li").length-1 !==
+                focusIndex &&
+            document.querySelectorAll("#search__autocomplete li").length != 0
+        ) {
+            focusIndex++;
+            let focus = ul.children[focusIndex];
+            if (focus != undefined) {
+                focus.tabIndex = 0;
+                focus.focus();
+            }
+        }
+
+    if (event.key == "ArrowUp") {
+        if (focusIndex != -1 && focusIndex != 0) {
+            focusIndex--;
+            let focus = ul.children[focusIndex];
+            focus.focus();
+        }
+    }
+};
+
 loadLocalData();
 setupListener();

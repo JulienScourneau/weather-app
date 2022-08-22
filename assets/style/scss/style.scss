@@ -5,7 +5,7 @@ $lato: "Lato", sans-serif;
 $hind: 'Hind', sans-serif;
 
 //Colors
-$colorPrimary: #183FB4;
+$colorPrimary: #4B72E7;
 $colorPrimaryDark: #0F266C;
 $colorPrimaryLight: #5f5fc4;
 $colorSecondary: #FFF9FB;
@@ -18,5 +18,5 @@ $colorAccent: #7C90A0;
 @import "forecast";
 
 body{
-    background-color: $colorPrimary;
+    background-color: lightgray;
 }
