@@ -1,8 +1,12 @@
+let throttlePause;
+
 async function getWeather(city) {
     try {
+
         let weather = await fetch(
             `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
         );
+
         let response = await weather.json();
         getCityPhoto(city);
         displayActualWeather(
@@ -11,15 +15,10 @@ async function getWeather(city) {
             response.list[0].weather[0].description,
             response.list[0].weather[0].description
         );
-        let today = new Date();
-        let forecastList = response.list.filter(
-            (item) =>
-                new Date(item.dt_txt).getDate() !== today.getDate() &&
-                new Date(item.dt_txt).getHours() == 12
-        );
-        console.log(forecastList);
+
+        let forecastList = filtreForecast(response.list)
+
         for (let elem of forecastList) {
-            console.log(elem);
             createForecastArticle(
                 elem.dt_txt,
                 elem.weather[0].description,
@@ -63,6 +62,15 @@ const displayActualWeather = (city, temp, icon, description) => {
     document.getElementById("weather__temp").innerHTML = parseInt(temp) + "°";
     document.getElementById("weather__icon").src = getIcon(icon);
     document.getElementById("weather__description").innerHTML = description;
+};
+
+const filtreForecast = (list) => {
+    let today = new Date();
+    return list.filter(
+        (item) =>
+            new Date(item.dt_txt).getDate() !== today.getDate() &&
+            new Date(item.dt_txt).getHours() == 12
+    );
 };
 
 const createForecastArticle = (date, image, temp) => {
@@ -112,8 +120,11 @@ const setupListener = () => {
             )
                 return;
 
-            if (event.target.value.length >= 3) getCityList(event.target.value);
-            if (event.target.value.length == 0) clearSearchList();
+            throttle(function () {
+                if (event.target.value.length >= 3)
+                    getCityList(event.target.value);
+                if (event.target.value.length == 0) clearSearchList();
+            }, 500);
         });
 
     document.body.addEventListener("keyup", (event) => {
@@ -126,15 +137,15 @@ const setupListener = () => {
                 clearSearchList();
             }
         }
-        console.log(event.key);
-        if (event.key == "ArrowDown") {
-            console.log("Focus");
-            
-            let focus = document.querySelector("li");
-            focus.tabIndex = -1;
-            console.log(focus);
-            focus.focus();
-        }
+        // console.log(event.key);
+        // if (event.key == "ArrowDown") {
+        //     console.log("Focus");
+
+        //     let focus = document.querySelector("li");
+        //     focus.tabIndex = -1;
+        //     console.log(focus);
+        //     focus.focus();
+        // }
     });
     document.getElementById("search__img").addEventListener("click", () => {
         let city = getCityName();
@@ -179,6 +190,7 @@ const displayAutocomplete = (list) => {
         let ul = document.getElementById("search__autocomplete");
         search.style.borderRadius = "20px 20px 0px 0px";
         for (let i = 0; i < 10; i++) {
+            if (i >= list.length) return;
             let li = document.createElement("li");
             li.addEventListener("click", (event) => {
                 displaySearchCity(event.target.textContent);
@@ -202,3 +214,12 @@ const clearSearchList = () => {
     while (ul.firstChild) ul.removeChild(ul.firstChild);
 };
 setupListener();
+
+const throttle = (callback, time) => {
+    if (throttlePause) return;
+    throttlePause = true;
+    setTimeout(() => {
+        callback();
+        throttlePause = false;
+    }, time);
+};
