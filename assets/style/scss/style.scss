@@ -16,3 +16,7 @@ $colorAccent: #7C90A0;
 @import "header";
 @import "weather";
 @import "forecast";
+
+body{
+    background-color: $colorPrimary;
+}

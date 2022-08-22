@@ -6,9 +6,10 @@
 
 .forecast {
     width: fit-content;
-    background-color: lightgray;
+    background-color: $colorPrimaryDark;
+    color: white;
     border-radius: 12px;
-    min-width: 80px;
+    min-width: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,15 +17,21 @@
     margin: 10px;
     padding: 5px;
     font-family: $hind;
+    border: 3px solid white;
+    border-radius: 12px;
+    font-size: 20px;
+
     &__day {
         margin: 5px;
         margin-top: 10px;
     }
+
     &__icon {
         margin: 10px 0px;
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
     }
+
     &__temp {
         margin: 10px;
     }

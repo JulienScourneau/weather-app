@@ -9,7 +9,8 @@ async function getWeather(city) {
         let response = await weather.json();
         localStorage.setItem("weatherData", JSON.stringify(response));
         getCityPhoto(city);
-        displayWeather(response);
+
+        return response;
     } catch (error) {
         console.error(error);
     }
@@ -35,9 +36,9 @@ async function getCityPhoto(input) {
         let response = await photos.json();
         let photo = response.results[Math.floor(Math.random() * 10)].urls.raw;
         localStorage.setItem("photoData", JSON.stringify(photo));
-        document.querySelector(
-            "section"
-        ).style.backgroundImage = `url("${photo}")`;
+        document.getElementsByClassName(
+            "weather-section"
+        )[0].style.backgroundImage = `url("${photo}")`;
     } catch (error) {
         console.error(error);
     }
@@ -48,7 +49,8 @@ const displayWeather = (response) => {
         response.city.name,
         response.list[0].main.temp,
         response.list[0].weather[0].description,
-        response.list[0].weather[0].description
+        response.list[0].weather[0].description,
+        response.list[0].dt_txt
     );
     clearForecastList();
     let forecastList = filtreForecast(response.list);
@@ -61,10 +63,14 @@ const displayWeather = (response) => {
     }
 };
 
-const actualWeather = (city, temp, icon, description) => {
+const actualWeather = (city, temp, icon, description, date) => {
+    let today = new Date(date);
     document.getElementById("weather__city").innerHTML = city;
     document.getElementById("weather__temp").innerHTML = parseInt(temp) + "°";
-    document.getElementById("weather__icon").src = getIcon(icon);
+    document.getElementById("weather__icon").src = getIcon(
+        icon,
+        today.getHours()
+    );
     document.getElementById("weather__description").innerHTML = description;
 };
 
@@ -73,7 +79,7 @@ const filtreForecast = (list) => {
     return list.filter(
         (item) =>
             new Date(item.dt_txt).getDate() !== today.getDate() &&
-            new Date(item.dt_txt).getHours() == 9
+            new Date(item.dt_txt).getHours() == 12
     );
 };
 
@@ -88,8 +94,9 @@ const createForecastArticle = (date, image, temp) => {
     img.classList.add("forecast__icon");
     span.classList.add("forecast__temp");
 
-    p.innerHTML = getHourOrDate(date);
-    img.src = getIcon(image);
+    let today = new Date(date);
+    p.innerHTML = displayMonth(date);
+    img.src = getIcon(image, today.getHours());
     span.innerHTML = parseInt(temp) + "°";
 
     article.appendChild(p);
@@ -99,16 +106,11 @@ const createForecastArticle = (date, image, temp) => {
     document.getElementById("forecast-section").appendChild(article);
 };
 
-const getHourOrDate = (date) => {
-    let today = new Date();
+const displayMonth = (date) => {
     let actualDate = new Date(date);
-    if (today.getDate() == actualDate.getDate()) {
-        return `${actualDate.getHours()}H00`;
-    } else {
-        return actualDate.getMonth + 1 <= 10
-            ? `${actualDate.getDate()}/${actualDate.getMonth() + 1}`
-            : `${actualDate.getDate()}/0${actualDate.getMonth() + 1}`;
-    }
+    return actualDate.getMonth + 1 <= 10
+        ? `${actualDate.getDate()}/${actualDate.getMonth() + 1}`
+        : `${actualDate.getDate()}/0${actualDate.getMonth() + 1}`;
 };
 
 const setupListener = () => {
@@ -137,7 +139,8 @@ const setupListener = () => {
             if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
             if (city != "") {
-                getWeather(city);
+                let a = getWeather(city);
+                a.then((response) => displayWeather(response));
                 clearSearchList();
             }
         }
@@ -169,12 +172,15 @@ const getIcon = (icon, hour) => {
         case "partiellement nuageux":
             return "assets/image/icon/party sunny.png";
         case "nuageux":
+            if (hour == 21) return "assets/image/icon/cloudy night.png";
             return "assets/image/icon/cloudy.png";
         case "couvert":
             return "assets/image/icon/posible havy rain.png";
         case "peu nuageux":
+            if (hour == 21) return "assets/image/icon/clear night-1.png";
             return "assets/image/icon/clear sky-1.png";
         case "ciel dégagé":
+            if (hour == 21) return "assets/image/icon/clear night.png";
             return "assets/image/icon/clear sky.png";
         case "légère pluie":
             return "assets/image/icon/rain.png";
@@ -198,7 +204,7 @@ const displayAutocomplete = (list) => {
             let li = document.createElement("li");
             li.addEventListener("click", (event) => {
                 displaySearchCity(event.target.textContent);
-                getWeather(getCityName())
+                getWeather(getCityName());
                 clearSearchList();
             });
             li.innerHTML = list[i].matching_full_name;
