@@ -2,29 +2,14 @@ let throttlePause;
 
 async function getWeather(city) {
     try {
-
         let weather = await fetch(
             `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
         );
 
         let response = await weather.json();
+        localStorage.setItem("weatherData", JSON.stringify(response));
         getCityPhoto(city);
-        displayActualWeather(
-            response.city.name,
-            response.list[0].main.temp,
-            response.list[0].weather[0].description,
-            response.list[0].weather[0].description
-        );
-
-        let forecastList = filtreForecast(response.list)
-
-        for (let elem of forecastList) {
-            createForecastArticle(
-                elem.dt_txt,
-                elem.weather[0].description,
-                elem.main.temp
-            );
-        }
+        displayWeather(response);
     } catch (error) {
         console.error(error);
     }
@@ -44,20 +29,39 @@ async function getCityList(input) {
 
 async function getCityPhoto(input) {
     try {
-        let photo = await fetch(
+        let photos = await fetch(
             `https://api.unsplash.com/search/photos?query=${input}&client_id=PieWdS-z10ISJpU3KdJV431kfTUEssUHEsgHYk1CnQ8`
         );
-        let response = await photo.json();
-        let random = Math.floor(Math.random() * 10);
+        let response = await photos.json();
+        let photo = response.results[Math.floor(Math.random() * 10)].urls.raw;
+        localStorage.setItem("photoData", JSON.stringify(photo));
         document.querySelector(
             "section"
-        ).style.backgroundImage = `url("${response.results[random].urls.raw}")`;
+        ).style.backgroundImage = `url("${photo}")`;
     } catch (error) {
         console.error(error);
     }
 }
 
-const displayActualWeather = (city, temp, icon, description) => {
+const displayWeather = (response) => {
+    actualWeather(
+        response.city.name,
+        response.list[0].main.temp,
+        response.list[0].weather[0].description,
+        response.list[0].weather[0].description
+    );
+    clearForecastList();
+    let forecastList = filtreForecast(response.list);
+    for (let elem of forecastList) {
+        createForecastArticle(
+            elem.dt_txt,
+            elem.weather[0].description,
+            elem.main.temp
+        );
+    }
+};
+
+const actualWeather = (city, temp, icon, description) => {
     document.getElementById("weather__city").innerHTML = city;
     document.getElementById("weather__temp").innerHTML = parseInt(temp) + "°";
     document.getElementById("weather__icon").src = getIcon(icon);
@@ -69,7 +73,7 @@ const filtreForecast = (list) => {
     return list.filter(
         (item) =>
             new Date(item.dt_txt).getDate() !== today.getDate() &&
-            new Date(item.dt_txt).getHours() == 12
+            new Date(item.dt_txt).getHours() == 9
     );
 };
 
@@ -194,6 +198,7 @@ const displayAutocomplete = (list) => {
             let li = document.createElement("li");
             li.addEventListener("click", (event) => {
                 displaySearchCity(event.target.textContent);
+                getWeather(getCityName())
                 clearSearchList();
             });
             li.innerHTML = list[i].matching_full_name;
@@ -207,13 +212,17 @@ const displaySearchCity = (city) => {
     searchText.value = city;
 };
 
+const clearForecastList = () => {
+    let forecast = document.getElementById("forecast-section");
+    while (forecast.firstChild) forecast.removeChild(forecast.firstChild);
+};
+
 const clearSearchList = () => {
     let search = document.getElementById("header__search");
     search.style.borderRadius = "20px";
     let ul = document.querySelector("ul");
     while (ul.firstChild) ul.removeChild(ul.firstChild);
 };
-setupListener();
 
 const throttle = (callback, time) => {
     if (throttlePause) return;
@@ -223,3 +232,13 @@ const throttle = (callback, time) => {
         throttlePause = false;
     }, time);
 };
+
+const loadLocalData = () => {
+    if (localStorage.length == 0) return getWeather("Bruxelles");
+    let weatherData = JSON.parse(localStorage.getItem("weatherData"));
+    let photo = JSON.parse(localStorage.getItem("photoData"));
+    displayWeather(weatherData);
+    document.querySelector("section").style.backgroundImage = `url("${photo}")`;
+};
+loadLocalData();
+setupListener();

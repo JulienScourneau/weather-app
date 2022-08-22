@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     @media screen and (min-width: 760px) {
-        height: 640px;
+        height: 520px;
         
     }
 }
@@ -28,9 +28,12 @@
     padding: 12px;
 
     &__city {
+        max-width: 140px;
         font-size: 24px;
         font-weight: 900;
         margin: 5px;
+        -webkit-line-clamp: 4;
+        text-align: center;
     }
 
     &__temp {

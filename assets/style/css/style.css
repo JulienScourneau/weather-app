@@ -160,7 +160,7 @@ input {
 }
 @media screen and (min-width: 760px) {
   .weather-section {
-    height: 640px;
+    height: 520px;
   }
 }
 
@@ -183,9 +183,12 @@ input {
   padding: 12px;
 }
 .weather__city {
+  max-width: 140px;
   font-size: 24px;
   font-weight: 900;
   margin: 5px;
+  -webkit-line-clamp: 4;
+  text-align: center;
 }
 .weather__temp {
   font-size: 48px;
