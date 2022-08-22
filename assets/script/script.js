@@ -135,7 +135,7 @@ const setupListener = () => {
 
     document.body.addEventListener("keyup", (event) => {
         if (event.key == "Enter") {
-            let searchCity = document.activeElement
+            let searchCity = document.activeElement;
             if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
             if (city != "") {
@@ -242,8 +242,8 @@ const throttle = (callback, time) => {
 
 const loadLocalData = () => {
     if (
-        JSON.parse(localStorage.getItem("weatherData")).cod == "400" ||
-        localStorage.length == 0
+        localStorage.length == 0 ||
+        JSON.parse(localStorage.getItem("weatherData")).cod == "400"
     ) {
         let data = getWeather("Bruxelles");
         data.then((response) => displayWeather(response));
@@ -259,7 +259,7 @@ const setFocus = (event) => {
     let ul = document.querySelector("ul");
     if (event.key == "ArrowDown")
         if (
-            document.querySelectorAll("#search__autocomplete li").length-1 !==
+            document.querySelectorAll("#search__autocomplete li").length - 1 !==
                 focusIndex &&
             document.querySelectorAll("#search__autocomplete li").length != 0
         ) {
