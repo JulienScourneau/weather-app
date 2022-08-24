@@ -1,11 +1,13 @@
 import { displayActualWeather } from "./view/displayActualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
+import { displaySearchCity } from "./view/displaySearchCity.js";
+import {APP} from "./model/App.js"
 
 let focusIndex = -1;
 async function getWeather(city) {
     try {
         let weather = await fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
+            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=${APP.apiKey.openWeatherKey}`
         );
 
         let response = await weather.json();
@@ -23,8 +25,7 @@ async function getCityList(input) {
         let cityList = await fetch(
             `https://api.teleport.org/api/cities/?search=${input}`
         );
-        let response = await cityList.json();
-        displayAutocomplete(response._embedded["city:search-results"]);
+        return await cityList.json();
     } catch (error) {
         console.error(error);
     }
@@ -86,8 +87,14 @@ const setupListener = () => {
                 return;
 
             throttle(function () {
-                if (event.target.value.length >= 3)
-                    getCityList(event.target.value);
+                if (event.target.value.length >= 3) {
+                    let cityList = getCityList(event.target.value);
+                    cityList.then((response) =>
+                        displayAutocomplete(
+                            response._embedded["city:search-results"]
+                        )
+                    );
+                }
                 if (event.target.value.length == 0) clearSearchList();
             }, 500);
         });
@@ -95,18 +102,19 @@ const setupListener = () => {
     document.body.addEventListener("keyup", (event) => {
         if (event.key == "Enter") {
             let searchCity;
-            if (
-                document.activeElement ==
-                document.getElementById("search__input")
-            ) {
-                searchCity = document.querySelector("ul").firstChild;
-            } else {
-                searchCity = document.activeElement;
+            if(document.activeElement != document.body){
+                if (
+                    document.activeElement ==
+                    document.getElementById("search__input")
+                ) {
+                    searchCity = document.querySelector("ul").firstChild;
+                } else {
+                    searchCity = document.activeElement;
+                }
             }
-            console.log(searchCity);
             if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
-            if (city != "") {
+            if (city !== "") {
                 let data = getWeather(city);
                 data.then((response) => displayWeather(response));
                 clearSearchList();
@@ -118,7 +126,6 @@ const setupListener = () => {
         let searchCity = document.querySelector("li");
         if (searchCity != null) displaySearchCity(searchCity.textContent);
         let city = getCityName();
-        console.log(city);
         if (city != "") {
             let data = getWeather(city);
             data.then((response) => displayWeather(response));
@@ -152,11 +159,6 @@ const displayAutocomplete = (list) => {
             ul.appendChild(li);
         }
     }
-};
-
-const displaySearchCity = (city) => {
-    let searchText = document.getElementById("search__input");
-    searchText.value = city;
 };
 
 const clearForecastList = () => {

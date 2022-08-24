@@ -54,6 +54,7 @@ input {
 }
 
 .header {
+  width: 100%;
   margin: 10px;
   display: flex;
   justify-content: center;
@@ -62,9 +63,6 @@ input {
   z-index: 1;
   /* Handle */
   /* Handle on hover */
-}
-.header__menu {
-  margin-right: 15px;
 }
 .header__search {
   display: flex;
@@ -149,15 +147,10 @@ input {
 }
 
 .weather-section {
-  height: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-@media screen and (min-width: 760px) {
-  .weather-section {
-    height: 520px;
-  }
+  margin-top: 120px;
 }
 
 .weather {
@@ -206,6 +199,13 @@ input {
   white-space: nowrap;
   overflow: auto;
   display: flex;
+  margin-top: 60px;
+}
+@media screen and (min-width: 570px) {
+  .forecast-section {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .forecast {
@@ -245,5 +245,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
