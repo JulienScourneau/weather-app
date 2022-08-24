@@ -1,6 +1,7 @@
 import { displayActualWeather } from "./view/displayActualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
 import { displaySearchCity } from "./view/displaySearchCity.js";
+import { getCityList } from "./controlleur/getCityPhoto.js";
 import {APP} from "./model/App.js"
 
 let focusIndex = -1;
@@ -20,16 +21,7 @@ async function getWeather(city) {
     }
 }
 
-async function getCityList(input) {
-    try {
-        let cityList = await fetch(
-            `https://api.teleport.org/api/cities/?search=${input}`
-        );
-        return await cityList.json();
-    } catch (error) {
-        console.error(error);
-    }
-}
+
 
 async function getCityPhoto(input) {
     try {
