@@ -1,4 +1,4 @@
-import { actualWeather } from "./view/actualWeather.js";
+import { actualWeather } from "./view/displayActualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
 
 let focusIndex = -1;
