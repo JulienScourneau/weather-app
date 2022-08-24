@@ -1,15 +1,10 @@
 .weather-section {
-    background-image: url("/assets/image/photo/tokyo.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     height: 360px;
     display: flex;
     justify-content: center;
     align-items: center;
     @media screen and (min-width: 760px) {
         height: 520px;
-        
     }
 }
 
@@ -22,9 +17,9 @@
     align-items: center;
     justify-content: center;
     font-family: $lato;
-    background-color: $colorPrimaryDark;
+    background-color: $colorTransparentPrimaryDark;
     color: $colorSecondary;
-    border: 3px solid white;
+    border: 3px solid $colorTransparentWhite;
     border-radius: 12px;
     padding: 12px;
 
@@ -41,7 +36,7 @@
         font-size: 48px;
         font-weight: 400;
         margin: 5px;
-        font-family: $lato
+        font-family: $lato;
     }
 
     &__icon {

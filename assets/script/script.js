@@ -1,6 +1,5 @@
 import { actualWeather } from "./view/actualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
-import { getIcon } from "./controlleur/getIcon.js";
 
 let focusIndex = -1;
 async function getWeather(city) {
@@ -39,9 +38,7 @@ async function getCityPhoto(input) {
         let response = await photos.json();
         let photo = response.results[Math.floor(Math.random() * 10)].urls.raw;
         localStorage.setItem("photoData", JSON.stringify(photo));
-        document.getElementsByClassName(
-            "weather-section"
-        )[0].style.backgroundImage = `url("${photo}")`;
+        document.body.style.backgroundImage = `url("${photo}")`;
     } catch (error) {
         console.error(error);
     }
@@ -197,7 +194,7 @@ const loadLocalData = () => {
     let weatherData = JSON.parse(localStorage.getItem("weatherData"));
     let photo = JSON.parse(localStorage.getItem("photoData"));
     displayWeather(weatherData);
-    document.querySelector("section").style.backgroundImage = `url("${photo}")`;
+    document.body.style.backgroundImage = `url("${photo}")`;
 };
 
 const setFocus = (event) => {

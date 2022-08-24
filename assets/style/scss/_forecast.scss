@@ -6,7 +6,7 @@
 
 .forecast {
     width: fit-content;
-    background-color: $colorPrimaryDark;
+    background-color: $colorTransparentPrimaryDark;
     color: white;
     border-radius: 12px;
     min-width: 120px;
@@ -17,7 +17,7 @@
     margin: 10px;
     padding: 5px;
     font-family: $hind;
-    border: 3px solid white;
+    border: 3px solid $colorTransparentWhite;
     border-radius: 12px;
     font-size: 20px;
 
