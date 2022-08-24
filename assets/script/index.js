@@ -1,12 +1,13 @@
 import { displayActualWeather } from "./view/displayActualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
 import { displaySearchCity } from "./view/displaySearchCity.js";
+import {APP} from "./model/App.js"
 
 let focusIndex = -1;
 async function getWeather(city) {
     try {
         let weather = await fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=9aca69ff480364b0b65bb3bc3d14b1c3`
+            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&lang=fr&appid=${APP.apiKey.openWeatherKey}`
         );
 
         let response = await weather.json();
@@ -111,10 +112,8 @@ const setupListener = () => {
                     searchCity = document.activeElement;
                 }
             }
-            console.log(searchCity);
             if (searchCity != null) displaySearchCity(searchCity.textContent);
             let city = getCityName();
-            console.log(city);
             if (city !== "") {
                 let data = getWeather(city);
                 data.then((response) => displayWeather(response));
@@ -127,7 +126,6 @@ const setupListener = () => {
         let searchCity = document.querySelector("li");
         if (searchCity != null) displaySearchCity(searchCity.textContent);
         let city = getCityName();
-        console.log(city);
         if (city != "") {
             let data = getWeather(city);
             data.then((response) => displayWeather(response));
