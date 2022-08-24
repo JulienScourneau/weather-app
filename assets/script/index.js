@@ -1,4 +1,4 @@
-import { actualWeather } from "./view/displayActualWeather.js";
+import { displayActualWeather } from "./view/displayActualWeather.js";
 import { createForecastArticle } from "./view/createForecast.js";
 
 let focusIndex = -1;
@@ -45,7 +45,7 @@ async function getCityPhoto(input) {
 }
 
 const displayWeather = (response) => {
-    actualWeather(
+    displayActualWeather(
         response.city.name,
         response.list[0].main.temp,
         response.list[0].weather[0].description,
