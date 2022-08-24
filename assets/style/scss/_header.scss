@@ -1,14 +1,11 @@
 .header {
+    width: 100%;
     margin: 10px;
     display: flex;
     justify-content: center;
     position: fixed;
     top: 0;
     z-index: 1;
-
-    &__menu {
-        margin-right: 15px;
-    }
 
     &__search {
         display: flex;
@@ -17,15 +14,18 @@
         padding: 5px;
         border-radius: 20px;
         background-color: white;
+
         &__text {
             height: 100%;
             width: 100%;
             margin: 0px 5px;
+
             &__input {
                 font-size: 1rem;
                 border: none;
                 height: 100%;
                 width: 100%;
+
                 &:focus {
                     outline: none;
                 }

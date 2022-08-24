@@ -54,6 +54,7 @@ input {
 }
 
 .header {
+  width: 100%;
   margin: 10px;
   display: flex;
   justify-content: center;
@@ -62,9 +63,6 @@ input {
   z-index: 1;
   /* Handle */
   /* Handle on hover */
-}
-.header__menu {
-  margin-right: 15px;
 }
 .header__search {
   display: flex;
@@ -247,5 +245,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
