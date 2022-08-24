@@ -2,6 +2,11 @@
     white-space: nowrap;
     overflow: auto;
     display: flex;
+    margin-top: 60px;
+    @media screen and (min-width: 570px) {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .forecast {

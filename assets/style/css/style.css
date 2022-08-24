@@ -149,15 +149,10 @@ input {
 }
 
 .weather-section {
-  height: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-@media screen and (min-width: 760px) {
-  .weather-section {
-    height: 520px;
-  }
+  margin-top: 120px;
 }
 
 .weather {
@@ -206,6 +201,13 @@ input {
   white-space: nowrap;
   overflow: auto;
   display: flex;
+  margin-top: 60px;
+}
+@media screen and (min-width: 570px) {
+  .forecast-section {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .forecast {
