@@ -26,7 +26,7 @@ async function getWeather(city) {
 async function getCityPhoto(input) {
     try {
         let photos = await fetch(
-            `https://api.unsplash.com/search/photos?query=${input}&client_id=PieWdS-z10ISJpU3KdJV431kfTUEssUHEsgHYk1CnQ8`
+            `https://api.unsplash.com/search/photos?query=${input}&client_id=${APP.apiKey.unsplash}`
         );
         let response = await photos.json();
         let photo = response.results[Math.floor(Math.random() * 10)].urls.raw;
