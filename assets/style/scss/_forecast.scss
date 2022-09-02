@@ -23,7 +23,6 @@
     padding: 5px;
     font-family: $hind;
     border: 3px solid $colorTransparentWhite;
-    border-radius: 12px;
     font-size: 20px;
 
     &__day {
@@ -32,7 +31,7 @@
     }
 
     &__icon {
-        margin: 10px 0px;
+        margin: 10px 0;
         width: 45px;
         height: 45px;
     }

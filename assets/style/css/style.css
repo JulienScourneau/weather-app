@@ -66,6 +66,7 @@ input {
 }
 .header__search {
   display: flex;
+  width: 600px;
   justify-content: center;
   align-items: center;
   padding: 5px;
@@ -224,7 +225,6 @@ input {
   padding: 5px;
   font-family: "Hind", sans-serif;
   border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
   font-size: 20px;
 }
 .forecast__day {
@@ -232,7 +232,7 @@ input {
   margin-top: 10px;
 }
 .forecast__icon {
-  margin: 10px 0px;
+  margin: 10px 0;
   width: 45px;
   height: 45px;
 }
